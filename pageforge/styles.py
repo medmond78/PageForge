@@ -1,12 +1,11 @@
 # pageforge/styles.py
 """ReportLab style definitions for PageForge."""
 
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_JUSTIFY
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.enums import TA_LEFT, TA_CENTER
 from reportlab.lib import colors
-from reportlab.lib.units import inch
 
-from pageforge.config import Config, FontConfig, SpacingConfig, ColorConfig
+from pageforge.config import Config, FontConfig, SpacingConfig
 
 
 def hex_to_reportlab_color(hex_str: str) -> colors.Color:
@@ -21,7 +20,8 @@ def hex_to_reportlab_color(hex_str: str) -> colors.Color:
 def create_heading_style(
     level: int,
     fonts: FontConfig,
-    spacing: SpacingConfig
+    spacing: SpacingConfig,
+    heading_color: colors.Color
 ) -> ParagraphStyle:
     """Create style for heading level (1-6)."""
     size_map = {
@@ -41,7 +41,7 @@ def create_heading_style(
         spaceBefore=spacing.heading_before,
         spaceAfter=spacing.heading_after,
         alignment=TA_LEFT,
-        textColor=colors.black,
+        textColor=heading_color,
     )
 
 
@@ -63,9 +63,10 @@ def get_styles(config: Config) -> dict:
     )
 
     # Heading styles
+    heading_color = hex_to_reportlab_color(config.colors.headings)
     for level in range(1, 7):
         styles[f"Heading{level}"] = create_heading_style(
-            level, config.fonts, config.spacing
+            level, config.fonts, config.spacing, heading_color
         )
 
     # Code style

@@ -1,7 +1,6 @@
 # tests/test_styles.py
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.enums import TA_LEFT, TA_CENTER
-from pageforge.styles import get_styles, create_heading_style
+from pageforge.styles import get_styles, create_heading_style, hex_to_reportlab_color
 from pageforge.config import get_default_config
 
 
@@ -42,7 +41,8 @@ def test_heading_styles():
 
 def test_create_heading_style():
     config = get_default_config()
-    style = create_heading_style(1, config.fonts, config.spacing)
+    heading_color = hex_to_reportlab_color(config.colors.headings)
+    style = create_heading_style(1, config.fonts, config.spacing, heading_color)
 
     assert isinstance(style, ParagraphStyle)
     assert style.fontSize == 24
