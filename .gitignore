@@ -216,3 +216,19 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# LLM and AI Assistant files
+.claude/
+.cursor/
+.aider/
+.remember/
+*.chat
+*.chatlog
+.ai/
+.copilot/
+artifacts/
+llm-artifacts/
+ai-chats/
+claude-chats/
+cursor-chats/
+.anthropic/
