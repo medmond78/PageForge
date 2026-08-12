@@ -7,6 +7,7 @@ from pathlib import Path
 
 import frontmatter
 import markdown
+import yaml
 
 
 @dataclass
@@ -24,8 +25,8 @@ def extract_frontmatter(content: str) -> tuple[dict, str]:
     try:
         post = frontmatter.loads(content)
         return dict(post.metadata), post.content
-    except (AttributeError, ValueError, TypeError):
-        # Invalid frontmatter format, treat as plain markdown
+    except (AttributeError, ValueError, TypeError, yaml.YAMLError):
+        # Invalid or malformed frontmatter, treat as plain markdown
         return {}, content
 
 
