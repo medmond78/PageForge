@@ -63,3 +63,4 @@ def test_parse_markdown_integration():
     assert doc.metadata["title"] == "Test Document"
     assert len(doc.images) == 1
     assert doc.images[0]["src"] == "test-image.png"
+    assert doc.images[0]["alt"] == "Test Image"

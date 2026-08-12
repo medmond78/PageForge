@@ -4,11 +4,9 @@
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 
 import frontmatter
 import markdown
-from markdown.extensions import extra, codehilite, nl2br
 
 
 @dataclass
@@ -26,20 +24,28 @@ def extract_frontmatter(content: str) -> tuple[dict, str]:
     try:
         post = frontmatter.loads(content)
         return dict(post.metadata), post.content
-    except Exception:
+    except (AttributeError, ValueError, TypeError):
+        # Invalid frontmatter format, treat as plain markdown
         return {}, content
 
 
 def find_image_references(html: str) -> list[dict]:
     """Find all image references in HTML."""
-    img_pattern = r'<img\s+(?:[^>]*?\s+)?src="([^"]*)"(?:\s+alt="([^"]*)")?[^>]*>'
-    matches = re.finditer(img_pattern, html)
+    # Find all img tags
+    img_tags = re.finditer(r'<img\s+([^>]+)/?>', html)
 
     images = []
-    for match in matches:
-        src = match.group(1)
-        alt = match.group(2) or ""
-        images.append({"src": src, "alt": alt})
+    for tag in img_tags:
+        attrs = tag.group(1)
+        # Extract src
+        src_match = re.search(r'src="([^"]*)"', attrs)
+        # Extract alt
+        alt_match = re.search(r'alt="([^"]*)"', attrs)
+
+        if src_match:
+            src = src_match.group(1)
+            alt = alt_match.group(1) if alt_match else ""
+            images.append({"src": src, "alt": alt})
 
     return images
 
