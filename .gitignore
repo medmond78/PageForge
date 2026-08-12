@@ -243,3 +243,5 @@ examples/ANSYS_FDA_CSA_Roadmap.md
 examples/ANSYS_Full_Qualification_Template.txt
 examples/ANSYS_Qualification_Exemplar_PFS_fixed.pdf
 examples/ANSYS_Qualification_Exemplar_PFS_fixed.pdf
+examples/*.md
+examples/*.pdf
