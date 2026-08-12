@@ -57,3 +57,70 @@ def test_load_svg_image():
     assert drawing is not None
     assert hasattr(drawing, 'width')
     assert hasattr(drawing, 'height')
+
+
+def test_resolve_image_interactive_with_valid_user_path(mocker, tmp_path):
+    """Test interactive mode where user provides valid image path."""
+    # Create valid image
+    valid_image = tmp_path / "user_image.png"
+    from PIL import Image
+    img = Image.new('RGB', (50, 50), color='green')
+    img.save(valid_image)
+
+    markdown_dir = tmp_path
+    config = ImageConfig()
+
+    # Mock input to return valid path
+    mock_input = mocker.patch('builtins.input', return_value=str(valid_image))
+
+    result = resolve_image("missing.png", markdown_dir, config, interactive=True)
+
+    # Should have prompted user and returned the valid path
+    mock_input.assert_called_once()
+    assert 'Image not found: missing.png' in mock_input.call_args[0][0]
+    assert result == valid_image
+
+
+def test_resolve_image_interactive_with_blank_input(mocker, tmp_path):
+    """Test interactive mode where user skips (blank input)."""
+    markdown_dir = tmp_path
+    config = ImageConfig()
+
+    # Mock input to return blank
+    mock_input = mocker.patch('builtins.input', return_value='')
+
+    result = resolve_image("missing.png", markdown_dir, config, interactive=True)
+
+    # Should have prompted user and returned None
+    mock_input.assert_called_once()
+    assert result is None
+
+
+def test_resolve_image_interactive_with_invalid_user_path(mocker, tmp_path):
+    """Test interactive mode where user provides invalid path."""
+    markdown_dir = tmp_path
+    config = ImageConfig()
+
+    # Mock input to return invalid path
+    mock_input = mocker.patch('builtins.input', return_value='/nonexistent/invalid.png')
+
+    result = resolve_image("missing.png", markdown_dir, config, interactive=True)
+
+    # Should have prompted user and returned None (invalid path)
+    mock_input.assert_called_once()
+    assert result is None
+
+
+def test_resolve_image_non_interactive_no_prompt(mocker, tmp_path):
+    """Test non-interactive mode doesn't prompt user."""
+    markdown_dir = tmp_path
+    config = ImageConfig()
+
+    # Mock input - should NOT be called
+    mock_input = mocker.patch('builtins.input')
+
+    result = resolve_image("missing.png", markdown_dir, config, interactive=False)
+
+    # Should NOT have prompted user
+    mock_input.assert_not_called()
+    assert result is None

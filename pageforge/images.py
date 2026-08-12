@@ -38,7 +38,17 @@ def resolve_image(
     config: ImageConfig,
     interactive: bool = True
 ) -> Optional[Path]:
-    """Resolve image path with fallback strategy."""
+    """Resolve image path with fallback strategy.
+
+    Args:
+        image_ref: Image reference from markdown
+        markdown_dir: Directory containing the markdown file
+        config: Image configuration
+        interactive: If True, prompt user for missing images
+
+    Returns:
+        Path to resolved image, or None if not found
+    """
     # Try relative to markdown file
     relative_path = markdown_dir / image_ref
     if validate_image(relative_path):
@@ -50,8 +60,15 @@ def resolve_image(
         if validate_image(fallback_path):
             return fallback_path
 
-    # TODO: Interactive prompt in future task
-    # For now, return None if not found
+    # Interactive prompt if enabled
+    if interactive:
+        user_path = input(f"Image not found: {image_ref}. Enter path or leave blank to skip: ")
+        if user_path:
+            user_path_obj = Path(user_path)
+            if validate_image(user_path_obj):
+                return user_path_obj
+
+    # Not found
     return None
 
 

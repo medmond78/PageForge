@@ -14,9 +14,10 @@ def test_html_to_flowables_paragraph():
     html = "<p>Simple paragraph</p>"
     markdown_dir = Path(".")
 
-    flowables = html_to_flowables(html, styles, config, markdown_dir, {})
+    flowables, missing_count = html_to_flowables(html, styles, config, markdown_dir, {}, interactive=False)
     assert len(flowables) > 0
     assert isinstance(flowables[0], Paragraph)
+    assert missing_count == 0
 
 
 def test_html_to_flowables_heading():
@@ -25,9 +26,10 @@ def test_html_to_flowables_heading():
     html = "<h1>Heading 1</h1>"
     markdown_dir = Path(".")
 
-    flowables = html_to_flowables(html, styles, config, markdown_dir, {})
+    flowables, missing_count = html_to_flowables(html, styles, config, markdown_dir, {}, interactive=False)
     assert len(flowables) > 0
     assert isinstance(flowables[0], Paragraph)
+    assert missing_count == 0
 
 
 def test_html_to_flowables_list():
@@ -36,8 +38,9 @@ def test_html_to_flowables_list():
     html = "<ul><li>Item 1</li><li>Item 2</li></ul>"
     markdown_dir = Path(".")
 
-    flowables = html_to_flowables(html, styles, config, markdown_dir, {})
+    flowables, missing_count = html_to_flowables(html, styles, config, markdown_dir, {}, interactive=False)
     assert len(flowables) > 0
+    assert missing_count == 0
 
 
 def test_generate_pdf_integration(tmp_path):
@@ -54,10 +57,11 @@ This is a test paragraph.
     doc = parse_markdown(content, Path("."))
     output_path = tmp_path / "test.pdf"
 
-    generate_pdf(doc, output_path, config, {})
+    missing_count = generate_pdf(doc, output_path, config, {}, interactive=False)
 
     assert output_path.exists()
     assert output_path.stat().st_size > 0
+    assert missing_count == 0
 
 
 def test_html_to_flowables_image_zero_dimensions(tmp_path, monkeypatch):
@@ -86,11 +90,12 @@ def test_html_to_flowables_image_zero_dimensions(tmp_path, monkeypatch):
     html = f'<img src="{test_image}" alt="Zero width image"/>'
 
     # Should not raise ZeroDivisionError
-    flowables = html_to_flowables(html, styles, config, tmp_path, {})
+    flowables, missing_count = html_to_flowables(html, styles, config, tmp_path, {}, interactive=False)
 
     # Should have a warning paragraph for image load error
     assert len(flowables) > 0
     assert isinstance(flowables[0], Paragraph)
+    assert missing_count == 0  # Image exists, just has zero dimensions
 
 
 def test_html_to_flowables_image_invalid_file(tmp_path):
@@ -105,11 +110,12 @@ def test_html_to_flowables_image_invalid_file(tmp_path):
     html = f'<img src="{invalid_image}" alt="Invalid image"/>'
 
     # Should not crash, should handle gracefully
-    flowables = html_to_flowables(html, styles, config, tmp_path, {})
+    flowables, missing_count = html_to_flowables(html, styles, config, tmp_path, {}, interactive=False)
 
     # Should have a warning paragraph
     assert len(flowables) > 0
     assert isinstance(flowables[0], Paragraph)
+    assert missing_count == 1  # Invalid image counts as missing
 
 
 def test_html_to_flowables_image_missing_file(tmp_path):
@@ -120,8 +126,9 @@ def test_html_to_flowables_image_missing_file(tmp_path):
     # Reference non-existent file
     html = '<img src="nonexistent.png" alt="Missing image"/>'
 
-    flowables = html_to_flowables(html, styles, config, tmp_path, {})
+    flowables, missing_count = html_to_flowables(html, styles, config, tmp_path, {}, interactive=False)
 
     # Should have a warning paragraph
     assert len(flowables) > 0
     assert isinstance(flowables[0], Paragraph)
+    assert missing_count == 1  # Missing image should be counted

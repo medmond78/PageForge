@@ -31,12 +31,14 @@ class MarkdownHTMLParser(HTMLParser):
       list_type variables instead of a stack-based approach.
     """
 
-    def __init__(self, styles: dict, config: Config, markdown_dir: Path, image_cache: dict):
+    def __init__(self, styles: dict, config: Config, markdown_dir: Path, image_cache: dict, interactive: bool = True):
         super().__init__()
         self.styles = styles
         self.config = config
         self.markdown_dir = markdown_dir
         self.image_cache = image_cache
+        self.interactive = interactive
+        self.missing_images = 0
         self.flowables = []
         self.current_tag = None
         self.tag_stack = []
@@ -162,10 +164,12 @@ class MarkdownHTMLParser(HTMLParser):
             src,
             self.markdown_dir,
             self.config.images,
-            interactive=False
+            interactive=self.interactive
         )
 
         if resolved_path is None or not resolved_path.exists():
+            # Track missing image
+            self.missing_images += 1
             # Add warning paragraph
             warning_text = f"[Image not found: {src}]"
             self.flowables.append(Paragraph(warning_text, self.styles['Normal']))
@@ -216,12 +220,17 @@ def html_to_flowables(
     styles: dict,
     config: Config,
     markdown_dir: Path,
-    image_cache: dict
-) -> list:
-    """Convert HTML to ReportLab flowables."""
-    parser = MarkdownHTMLParser(styles, config, markdown_dir, image_cache)
+    image_cache: dict,
+    interactive: bool = True
+) -> tuple[list, int]:
+    """Convert HTML to ReportLab flowables.
+
+    Returns:
+        Tuple of (flowables list, missing_images count)
+    """
+    parser = MarkdownHTMLParser(styles, config, markdown_dir, image_cache, interactive)
     parser.feed(html)
-    return parser.flowables
+    return parser.flowables, parser.missing_images
 
 
 def get_page_size(size_name: str, orientation: str) -> tuple[float, float]:
@@ -244,21 +253,27 @@ def generate_pdf(
     doc: Document,
     output_path: Path,
     config: Config,
-    image_cache: dict
-) -> None:
-    """Generate PDF from parsed document."""
+    image_cache: dict,
+    interactive: bool = True
+) -> int:
+    """Generate PDF from parsed document.
+
+    Returns:
+        Number of missing images
+    """
     from pageforge.styles import get_styles
 
     # Get styles
     styles = get_styles(config)
 
     # Convert HTML to flowables
-    flowables = html_to_flowables(
+    flowables, missing_count = html_to_flowables(
         doc.html,
         styles,
         config,
         doc.markdown_path.parent,
-        image_cache
+        image_cache,
+        interactive
     )
 
     # Create PDF document
@@ -275,3 +290,5 @@ def generate_pdf(
 
     # Build PDF
     pdf_doc.build(flowables)
+
+    return missing_count
