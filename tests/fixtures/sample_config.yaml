@@ -1,0 +1,28 @@
+page:
+  size: a4
+  orientation: portrait
+  margins:
+    top: 1.5
+    bottom: 1.5
+    left: 1.0
+    right: 1.0
+
+fonts:
+  body: Helvetica
+  heading: Helvetica-Bold
+  sizes:
+    h1: 28
+    h2: 20
+    body: 12
+
+colors:
+  headings: "#2c3e50"
+  text: "#000000"
+
+spacing:
+  paragraph: 14
+  heading_before: 20
+
+images:
+  max_width: 7.0
+  show_captions: true
