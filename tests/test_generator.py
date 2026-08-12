@@ -58,3 +58,70 @@ This is a test paragraph.
 
     assert output_path.exists()
     assert output_path.stat().st_size > 0
+
+
+def test_html_to_flowables_image_zero_dimensions(tmp_path, monkeypatch):
+    """Test handling of images with zero dimensions (should not crash with ZeroDivisionError)."""
+    from unittest.mock import MagicMock
+
+    config = get_default_config()
+    styles = get_styles(config)
+
+    # Create a real image file to pass existence checks
+    from PIL import Image as PILImage
+    test_image = tmp_path / "test.png"
+    img = PILImage.new('RGB', (10, 10), color='blue')
+    img.save(test_image)
+
+    # Mock RLImage to have zero width
+    original_rlimage = RLImage
+    def mock_rlimage(path):
+        img = original_rlimage(path)
+        img.imageWidth = 0
+        img.imageHeight = 100
+        return img
+
+    monkeypatch.setattr('pageforge.generator.RLImage', mock_rlimage)
+
+    html = f'<img src="{test_image}" alt="Zero width image"/>'
+
+    # Should not raise ZeroDivisionError
+    flowables = html_to_flowables(html, styles, config, tmp_path, {})
+
+    # Should have a warning paragraph for image load error
+    assert len(flowables) > 0
+    assert isinstance(flowables[0], Paragraph)
+
+
+def test_html_to_flowables_image_invalid_file(tmp_path):
+    """Test handling of corrupted/invalid image files."""
+    config = get_default_config()
+    styles = get_styles(config)
+
+    # Create an invalid image file (just text)
+    invalid_image = tmp_path / "invalid.png"
+    invalid_image.write_text("This is not an image")
+
+    html = f'<img src="{invalid_image}" alt="Invalid image"/>'
+
+    # Should not crash, should handle gracefully
+    flowables = html_to_flowables(html, styles, config, tmp_path, {})
+
+    # Should have a warning paragraph
+    assert len(flowables) > 0
+    assert isinstance(flowables[0], Paragraph)
+
+
+def test_html_to_flowables_image_missing_file(tmp_path):
+    """Test handling of missing image files."""
+    config = get_default_config()
+    styles = get_styles(config)
+
+    # Reference non-existent file
+    html = '<img src="nonexistent.png" alt="Missing image"/>'
+
+    flowables = html_to_flowables(html, styles, config, tmp_path, {})
+
+    # Should have a warning paragraph
+    assert len(flowables) > 0
+    assert isinstance(flowables[0], Paragraph)

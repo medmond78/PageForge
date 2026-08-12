@@ -3,7 +3,6 @@
 
 from html.parser import HTMLParser
 from pathlib import Path
-from typing import Any
 
 from reportlab.lib.pagesizes import letter, A4, legal
 from reportlab.lib.units import inch
@@ -12,7 +11,6 @@ from reportlab.platypus import (
     Paragraph,
     Spacer,
     Image as RLImage,
-    PageBreak,
     ListFlowable,
     ListItem,
     Preformatted,
@@ -25,7 +23,13 @@ from pageforge.images import resolve_image
 
 
 class MarkdownHTMLParser(HTMLParser):
-    """HTML parser that converts to ReportLab flowables."""
+    """HTML parser that converts to ReportLab flowables.
+
+    Limitations:
+    - Nested lists are not supported. Inner and outer list items will be mixed
+      into a single flat list. This is due to the use of single list_items and
+      list_type variables instead of a stack-based approach.
+    """
 
     def __init__(self, styles: dict, config: Config, markdown_dir: Path, image_cache: dict):
         super().__init__()
@@ -178,6 +182,13 @@ class MarkdownHTMLParser(HTMLParser):
                 max_height = self.config.images.max_height * inch
 
                 img = RLImage(str(resolved_path))
+
+                # Validate image dimensions to prevent division by zero
+                if img.imageWidth <= 0 or img.imageHeight <= 0:
+                    warning_text = f"[Image has invalid dimensions: {src}]"
+                    self.flowables.append(Paragraph(warning_text, self.styles['Normal']))
+                    return
+
                 # Scale to fit
                 aspect = img.imageHeight / img.imageWidth
                 if img.imageWidth > max_width:
@@ -194,7 +205,7 @@ class MarkdownHTMLParser(HTMLParser):
                 if self.config.images.show_captions and alt:
                     self.flowables.append(Paragraph(alt, self.styles['Caption']))
 
-            except Exception as e:
+            except (IOError, OSError, ValueError) as e:
                 # Image load failed
                 warning_text = f"[Image load error: {src}]"
                 self.flowables.append(Paragraph(warning_text, self.styles['Normal']))
