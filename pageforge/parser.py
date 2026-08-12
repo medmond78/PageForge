@@ -61,7 +61,6 @@ def parse_markdown(content: str, markdown_path: Path) -> Document:
         extensions=[
             "extra",  # Tables, fenced code, footnotes
             "codehilite",  # Syntax highlighting
-            "nl2br",  # Newline to <br>
         ],
         extension_configs={
             "codehilite": {
