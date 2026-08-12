@@ -46,3 +46,14 @@ def test_load_raster_image():
     assert img is not None
     assert hasattr(img, 'drawWidth')
     assert hasattr(img, 'drawHeight')
+
+
+def test_load_svg_image():
+    from pageforge.images import load_svg_image
+    path = Path("tests/fixtures/test-diagram.svg")
+    config = ImageConfig()
+
+    drawing = load_svg_image(path, config)
+    assert drawing is not None
+    assert hasattr(drawing, 'width')
+    assert hasattr(drawing, 'height')

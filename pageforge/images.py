@@ -7,6 +7,7 @@ from typing import Optional
 from PIL import Image
 from reportlab.lib.units import inch
 from reportlab.platypus import Image as RLImage
+from reportlab.graphics.shapes import Drawing
 from svglib.svglib import svg2rlg
 
 from pageforge.config import ImageConfig
@@ -64,26 +65,27 @@ def load_raster_image(path: Path, config: ImageConfig) -> RLImage:
     width_in = width_px / config.dpi
     height_in = height_px / config.dpi
 
-    # Scale down if exceeds max dimensions
-    if width_in > config.max_width:
-        scale = config.max_width / width_in
-        width_in = config.max_width
-        height_in = height_in * scale
+    # Calculate scale factors (don't upscale)
+    width_scale = config.max_width / width_in if width_in > config.max_width else 1.0
+    height_scale = config.max_height / height_in if height_in > config.max_height else 1.0
+    scale = min(width_scale, height_scale)
 
-    if height_in > config.max_height:
-        scale = config.max_height / height_in
-        height_in = config.max_height
-        width_in = width_in * scale
+    # Apply scale once
+    width_in *= scale
+    height_in *= scale
 
     # Create ReportLab image
     img = RLImage(str(path), width=width_in * inch, height=height_in * inch)
     return img
 
 
-def load_svg_image(path: Path, config: ImageConfig):
+def load_svg_image(path: Path, config: ImageConfig) -> Optional[Drawing]:
     """Load SVG and convert to ReportLab drawing."""
-    drawing = svg2rlg(str(path))
-    if drawing is None:
+    try:
+        drawing = svg2rlg(str(path))
+        if drawing is None:
+            return None
+    except Exception:
         return None
 
     # Scale to fit max dimensions
