@@ -1,0 +1,92 @@
+# PageForge Configuration Example
+# This file demonstrates all available configuration options
+# All settings are optional - omit any section to use built-in defaults
+
+# Page Layout
+# Defines physical page dimensions and margins
+page:
+  size: letter          # Options: letter, a4, legal
+  orientation: portrait # Options: portrait, landscape
+  margins:
+    top: 1.0           # All margins in inches
+    bottom: 1.0
+    left: 1.0
+    right: 1.0
+
+# Typography
+# Control fonts and text sizes throughout the document
+fonts:
+  body: Helvetica          # Standard paragraph text
+  heading: Helvetica-Bold  # All headings
+  code: Courier            # Code blocks and inline code
+
+  # Font sizes in points
+  sizes:
+    h1: 24      # Level 1 heading
+    h2: 18      # Level 2 heading
+    h3: 14      # Level 3 heading
+    h4: 12      # Level 4 heading
+    h5: 11      # Level 5 heading
+    h6: 10      # Level 6 heading
+    body: 11    # Body text
+    code: 9     # Code blocks
+    caption: 9  # Image captions
+
+# Available fonts (ReportLab built-in):
+# - Helvetica, Helvetica-Bold, Helvetica-Oblique, Helvetica-BoldOblique
+# - Times-Roman, Times-Bold, Times-Italic, Times-BoldItalic
+# - Courier, Courier-Bold, Courier-Oblique, Courier-BoldOblique
+
+# Colors
+# RGB hex strings (#RRGGBB)
+colors:
+  text: "#000000"         # Main body text (black)
+  headings: "#1a1a1a"     # All heading levels (dark gray)
+  code_bg: "#f5f5f5"      # Code block background (light gray)
+  code_text: "#2c3e50"    # Code text color (dark blue-gray)
+  links: "#0066cc"        # Hyperlinks (blue)
+  table_header: "#e8e8e8" # Table header background (light gray)
+
+# Spacing
+# Control whitespace between elements
+spacing:
+  paragraph: 12       # Points after each paragraph
+  heading_before: 18  # Points before headings (creates visual breaks)
+  heading_after: 6    # Points after headings
+  line_height: 1.2    # Line spacing multiplier (1.0 = single, 1.5 = 1.5x, etc.)
+  list_indent: 20     # Points to indent list items
+
+# Image Settings
+images:
+  max_width: 6.5        # Maximum width in inches (should fit within margins)
+  max_height: 9.0       # Maximum height in inches
+  dpi: 150              # Resolution for rendering
+  fallback_dir: null    # Optional: directory to search if image not found relative to markdown
+                        # Example: "C:\\Images\\" or "/home/user/images/"
+  center_align: true    # Center images on page
+  show_captions: true   # Show alt text as caption below image
+
+# Code Block Settings
+code:
+  syntax_highlight: true       # Enable Pygments syntax highlighting
+  theme: default               # Pygments theme (default, monokai, github, etc.)
+  show_line_numbers: false     # Display line numbers in code blocks
+  wrap_long_lines: true        # Wrap lines that exceed page width
+  background: true             # Show background color for code blocks
+
+# Notes:
+# - Settings cascade: defaults < home config < project config < CLI config < frontmatter
+# - Create .pageforge.yaml in your home directory for global defaults
+# - Create pageforge.yaml in project directory for project-specific settings
+# - Use --config flag to specify a custom config file
+# - Use frontmatter in markdown files for per-document overrides
+
+# Example frontmatter override:
+# ---
+# title: My Document
+# pageforge:
+#   fonts:
+#     body: Times-Roman
+#   colors:
+#     headings: "#003366"
+# ---
