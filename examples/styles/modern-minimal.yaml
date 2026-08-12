@@ -1,0 +1,49 @@
+# Modern Minimal Style Configuration
+# Clean, contemporary look with lots of whitespace
+
+page:
+  size: letter
+  orientation: portrait
+  margins:
+    top: 1.5      # Extra whitespace
+    bottom: 1.5
+    left: 1.25
+    right: 1.25
+
+fonts:
+  body_font: Helvetica
+  heading_font: Helvetica-Bold
+  code_font: Courier
+  sizes:
+    body: 11
+    heading1: 24      # Large, bold headings
+    heading2: 18
+    heading3: 14
+    heading4: 12
+    heading5: 11
+    heading6: 11
+    code: 9
+
+colors:
+  text: "#2c3e50"        # Dark blue-gray (easier on eyes than pure black)
+  headings: "#1a1a1a"    # Nearly black for headings
+  code_bg: "#f8f9fa"     # Very light gray
+  code_text: "#2c3e50"
+
+spacing:
+  line_spacing: 1.6      # Generous line spacing
+  paragraph_spacing: 12  # Lots of space between paragraphs
+  heading_spacing: 18    # Extra space before headings
+  list_indent: 30
+
+images:
+  max_width: 6.0
+  max_height: 7.5
+  dpi: 150
+  fallback_dir: ./images
+
+code:
+  wrap: true
+  font_size: 9
+  line_spacing: 1.4
+  background_color: "#f8f9fa"

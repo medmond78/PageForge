@@ -1,0 +1,50 @@
+# LaTeX Article Style Configuration
+# Mimics LaTeX's classic article document class appearance
+
+page:
+  size: letter
+  orientation: portrait
+  margins:
+    top: 1.0
+    bottom: 1.0
+    left: 1.25      # LaTeX has generous side margins
+    right: 1.25
+
+fonts:
+  # LaTeX uses Computer Modern, we'll approximate with Times (serif)
+  body_font: Times-Roman
+  heading_font: Times-Bold
+  code_font: Courier
+  sizes:
+    body: 11        # LaTeX default is 10pt, but 11pt is more readable on screen
+    heading1: 17
+    heading2: 14
+    heading3: 12
+    heading4: 11
+    heading5: 11
+    heading6: 11
+    code: 9
+
+colors:
+  text: "#000000"        # Pure black
+  headings: "#000000"    # Black headings (LaTeX style)
+  code_bg: "#f5f5f5"     # Light gray for code blocks
+  code_text: "#000000"
+
+spacing:
+  line_spacing: 1.2      # Tighter than default
+  paragraph_spacing: 6   # Half a line
+  heading_spacing: 12    # More space before headings
+  list_indent: 25        # LaTeX list indent
+
+images:
+  max_width: 6.0         # Narrower content area due to margins
+  max_height: 8.0
+  dpi: 150
+  fallback_dir: ./images
+
+code:
+  wrap: true
+  font_size: 9
+  line_spacing: 1.1      # Tight spacing like LaTeX listings
+  background_color: "#f5f5f5"

@@ -1,0 +1,49 @@
+# Compact Dense Style Configuration
+# Maximize content per page - good for reference documents
+
+page:
+  size: letter
+  orientation: portrait
+  margins:
+    top: 0.75
+    bottom: 0.75
+    left: 0.75
+    right: 0.75
+
+fonts:
+  body_font: Helvetica
+  heading_font: Helvetica-Bold
+  code_font: Courier
+  sizes:
+    body: 9       # Smaller body text
+    heading1: 14
+    heading2: 12
+    heading3: 10
+    heading4: 9
+    heading5: 9
+    heading6: 9
+    code: 8
+
+colors:
+  text: "#000000"
+  headings: "#000000"
+  code_bg: "#f5f5f5"
+  code_text: "#000000"
+
+spacing:
+  line_spacing: 1.1      # Very tight
+  paragraph_spacing: 4   # Minimal
+  heading_spacing: 8     # Compact
+  list_indent: 18
+
+images:
+  max_width: 7.0
+  max_height: 9.5
+  dpi: 150
+  fallback_dir: ./images
+
+code:
+  wrap: true
+  font_size: 8
+  line_spacing: 1.0
+  background_color: "#f5f5f5"
