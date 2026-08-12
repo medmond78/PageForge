@@ -115,7 +115,8 @@ class MarkdownHTMLParser(HTMLParser):
         elif tag in ['ul', 'ol']:
             if self.list_items:
                 # Create list flowable
-                bullet_type = 'bullet' if tag == 'ul' else 'decimal'
+                # Valid bulletType values: 'bullet' for unordered, '1', 'a', 'A', 'i', 'I' for ordered
+                bullet_type = 'bullet' if tag == 'ul' else '1'
                 list_items = []
                 for item_text in self.list_items:
                     para = Paragraph(item_text, self.styles['Normal'])
