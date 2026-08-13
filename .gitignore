@@ -232,6 +232,9 @@ ai-chats/
 claude-chats/
 cursor-chats/
 .anthropic/
+
+# Inspiration files for style development
+inspiration/
 examples/quality-management-system.pdf
 .gitignore
 examples/quality-management-system.md
