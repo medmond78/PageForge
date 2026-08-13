@@ -11,9 +11,9 @@ page:
     right: 0.75
 
 fonts:
-  body_font: Helvetica
-  heading_font: Helvetica-Bold
-  code_font: Courier
+  body: Helvetica
+  heading: Helvetica-Bold
+  code: Courier
   sizes:
     body: 9       # Smaller body text
     heading1: 14

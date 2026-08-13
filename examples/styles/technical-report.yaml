@@ -11,9 +11,9 @@ page:
     right: 1.0
 
 fonts:
-  body_font: Times-Roman      # Traditional serif for body
-  heading_font: Helvetica-Bold  # Sans-serif for headings (contrast)
-  code_font: Courier
+  body: Times-Roman      # Traditional serif for body
+  heading: Helvetica-Bold  # Sans-serif for headings (contrast)
+  code: Courier
   sizes:
     body: 10
     heading1: 16

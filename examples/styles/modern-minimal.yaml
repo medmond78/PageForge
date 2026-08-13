@@ -11,9 +11,9 @@ page:
     right: 1.25
 
 fonts:
-  body_font: Helvetica
-  heading_font: Helvetica-Bold
-  code_font: Courier
+  body: Helvetica
+  heading: Helvetica-Bold
+  code: Courier
   sizes:
     body: 11
     heading1: 24      # Large, bold headings

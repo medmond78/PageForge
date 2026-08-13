@@ -13,9 +13,9 @@ page:
 
 fonts:
   # Pure serif throughout - Times family like traditional journals
-  body_font: Times-Roman
-  heading_font: Times-Bold    # Same family, bold weight
-  code_font: Courier
+  body: Times-Roman
+  heading: Times-Bold    # Same family, bold weight
+  code: Courier
   sizes:
     body: 10        # Compact academic sizing
     heading1: 14    # Article title

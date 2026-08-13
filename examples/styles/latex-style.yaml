@@ -12,9 +12,9 @@ page:
 
 fonts:
   # LaTeX uses Computer Modern, we'll approximate with Times (serif)
-  body_font: Times-Roman
-  heading_font: Times-Bold
-  code_font: Courier
+  body: Times-Roman
+  heading: Times-Bold
+  code: Courier
   sizes:
     body: 11        # LaTeX default is 10pt, but 11pt is more readable on screen
     heading1: 17
