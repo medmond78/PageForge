@@ -1,0 +1,61 @@
+# Academic Journal Style Configuration
+# Based on analysis of IMechE and ASME journal papers
+# Replicates traditional academic journal formatting adapted for single-column
+
+page:
+  size: letter
+  orientation: portrait
+  margins:
+    top: 0.85      # Tighter margins for academic density
+    bottom: 0.85
+    left: 0.85
+    right: 0.85
+
+fonts:
+  # Pure serif throughout - Times family like traditional journals
+  body_font: Times-Roman
+  heading_font: Times-Bold    # Same family, bold weight
+  code_font: Courier
+  sizes:
+    body: 10        # Compact academic sizing
+    heading1: 14    # Article title
+    heading2: 11    # Section headings (only slightly larger)
+    heading3: 10    # Subsections (same as body, bold only)
+    heading4: 10
+    heading5: 10
+    heading6: 10
+    code: 9
+
+colors:
+  # Pure black throughout - traditional academic appearance
+  text: "#000000"
+  headings: "#000000"       # Black headings (no color)
+  code_bg: "#ffffff"        # White background for code
+  code_text: "#000000"
+
+spacing:
+  line_spacing: 1.1          # Tight spacing
+  paragraph_spacing: 6       # Minimal space between paragraphs
+  heading_spacing: 10        # Moderate space before sections
+  list_indent: 20            # Compact list indentation
+
+images:
+  max_width: 6.8             # Use most of the page width
+  max_height: 9.3
+  dpi: 150
+  fallback_dir: ./images
+
+code:
+  wrap: true
+  font_size: 9
+  line_spacing: 1.0          # Very tight for code
+  background_color: "#ffffff"
+
+# Style Notes:
+# - Serif fonts throughout (Times-Roman family)
+# - Pure black text and headings (no colored accents)
+# - Tight spacing to maximize content density
+# - Compact margins for journal-style layout
+# - Bold headings that are same or slightly larger than body
+# - Adapted from two-column journal layout to single-column
+# - Professional, print-ready appearance

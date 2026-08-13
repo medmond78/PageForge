@@ -4,6 +4,32 @@ Alternative style configurations for different document types.
 
 ## Available Styles
 
+### Academic Journal Style (`academic-journal.yaml`)
+
+Replicates traditional academic journal formatting (IMechE, ASME style).
+
+**Characteristics:**
+- Pure serif fonts (Times-Roman throughout)
+- Compact sizing (10pt body, tight spacing)
+- Black text and headings (no colored accents)
+- Tight margins (0.85 inches)
+- Bold headings same size as body text
+- Information-dense layout
+
+**Best for:**
+- Academic papers for publication
+- Research articles
+- Scientific documentation
+- Papers requiring journal-style formatting
+- Maximum content density with traditional appearance
+
+**Usage:**
+```bash
+pageforge document.md output.pdf --config examples/styles/academic-journal.yaml
+```
+
+**Note:** Adapted from two-column journal layouts to single-column PageForge output.
+
 ### LaTeX Article Style (`latex-style.yaml`)
 
 Mimics the classic LaTeX article document class appearance.
