@@ -1,3 +1,8 @@
+
+<div align="center">
+  <img src="assets/page_forge_logo.png" alt="Unitasker Logo" width="300">
+</div>
+
 # PageForge
 
 Convert Markdown to professional PDFs with zero external dependencies.
