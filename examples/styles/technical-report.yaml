@@ -31,9 +31,10 @@ colors:
   code_text: "#000000"
 
 spacing:
-  line_spacing: 1.15     # Tight spacing to fit more content
-  paragraph_spacing: 6
-  heading_spacing: 10
+  line_height: 1.15     # Tight spacing to fit more content
+  paragraph: 6
+  heading_before: 10
+  heading_after: 4        # Space after headings
   list_indent: 20
 
 images:
@@ -45,5 +46,5 @@ images:
 code:
   wrap: true
   font_size: 8.5
-  line_spacing: 1.1
+  line_height: 1.1
   background_color: "#f0f0f0"

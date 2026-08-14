@@ -34,9 +34,10 @@ colors:
   code_text: "#000000"
 
 spacing:
-  line_spacing: 1.1          # Tight spacing
-  paragraph_spacing: 6       # Minimal space between paragraphs
-  heading_spacing: 10        # Moderate space before sections
+  line_height: 1.1          # Tight spacing
+  paragraph: 6       # Minimal space between paragraphs
+  heading_before: 10        # Moderate space before sections
+  heading_after: 4        # Space after headings
   list_indent: 20            # Compact list indentation
 
 images:
@@ -48,7 +49,7 @@ images:
 code:
   wrap: true
   font_size: 9
-  line_spacing: 1.0          # Very tight for code
+  line_height: 1.0          # Very tight for code
   background_color: "#ffffff"
 
 # Style Notes:

@@ -31,9 +31,10 @@ colors:
   code_text: "#2c3e50"
 
 spacing:
-  line_spacing: 1.6      # Generous line spacing
-  paragraph_spacing: 12  # Lots of space between paragraphs
-  heading_spacing: 18    # Extra space before headings
+  line_height: 1.6      # Generous line spacing
+  paragraph: 12  # Lots of space between paragraphs
+  heading_before: 18    # Extra space before headings
+  heading_after: 4        # Space after headings
   list_indent: 30
 
 images:
@@ -45,5 +46,5 @@ images:
 code:
   wrap: true
   font_size: 9
-  line_spacing: 1.4
+  line_height: 1.4
   background_color: "#f8f9fa"
